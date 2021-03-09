@@ -50,6 +50,8 @@ export const DarkModeButton = () => {
     setTheme(newTheme);
   };
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <div
       className={classNames({
@@ -74,17 +76,21 @@ export const DarkModeButton = () => {
       >
         <mask id="moonMask">
           <rect x="0" y="0" width="100%" height="100%" fill="white" />
-          <animated.circle style={maskedCircleProps} r="9" fill="black" />
+          <animated.circle
+            style={maskedCircleProps as any}
+            r="9"
+            fill="black"
+          />
         </mask>
 
         <animated.circle
           cx="12"
           cy="12"
-          style={centerCircleProps}
+          style={centerCircleProps as any}
           fill="currentColor"
           mask="url(#moonMask)"
         />
-        <animated.g stroke="currentColor" style={linesProps}>
+        <animated.g stroke="currentColor" style={linesProps as any}>
           <line x1="12" y1="1" x2="12" y2="3" />
           <line x1="12" y1="21" x2="12" y2="23" />
           <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
