@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import classNames from "classnames";
 import { useTheme } from "next-themes";
 import { animated, useSpring } from "react-spring";
+import { DEFAULT_THEME, Themes } from "../core/theme";
 
 const properties = {
   dark: {
@@ -20,18 +22,12 @@ const properties = {
   springConfig: { mass: 4, tension: 250, friction: 35 },
 };
 
-export const DarkMode = () => {
+export const DarkModeButton = () => {
   const { theme: themeGlobal, setTheme: setThemeGlobal } = useTheme();
-  const [theme, setTheme] = useState("dark");
-
-  useEffect(() => {
-    theme !== themeGlobal && setTheme(themeGlobal);
-  }, [themeGlobal]);
-
+  const [theme, setTheme] = useState(DEFAULT_THEME);
   const { r, transform, cx, cy, opacity } = properties[
-    theme === "dark" ? "dark" : "light"
+    theme === Themes.Dark ? Themes.Light : Themes.Dark
   ];
-
   const svgContainerProps = useSpring({
     transform,
     config: properties.springConfig,
@@ -44,51 +40,61 @@ export const DarkMode = () => {
   });
   const linesProps = useSpring({ opacity, config: properties.springConfig });
 
+  useEffect(() => {
+    theme !== themeGlobal && setTheme(themeGlobal);
+  }, [themeGlobal]);
+
   const toggleDarkMode = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
+    const newTheme = theme === Themes.Dark ? Themes.Light : Themes.Dark;
     setThemeGlobal(newTheme);
     setTheme(newTheme);
   };
 
   return (
-    <animated.svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      stroke="currentColor"
-      onClick={toggleDarkMode}
-      style={{
-        cursor: "pointer",
-        ...svgContainerProps,
-      }}
+    <div
+      className={classNames({
+        "text-amber-50 hover:text-amber-100": theme === Themes.Dark,
+      })}
     >
-      <mask id="myMask2">
-        <rect x="0" y="0" width="100%" height="100%" fill="white" />
-        <animated.circle style={maskedCircleProps} r="9" fill="black" />
-      </mask>
+      <animated.svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        stroke="currentColor"
+        onClick={toggleDarkMode}
+        style={{
+          cursor: "pointer",
+          ...svgContainerProps,
+        }}
+      >
+        <mask id="moonMask">
+          <rect x="0" y="0" width="100%" height="100%" fill="white" />
+          <animated.circle style={maskedCircleProps} r="9" fill="black" />
+        </mask>
 
-      <animated.circle
-        cx="12"
-        cy="12"
-        style={centerCircleProps}
-        fill="black"
-        mask="url(#myMask2)"
-      />
-      <animated.g stroke="currentColor" style={linesProps}>
-        <line x1="12" y1="1" x2="12" y2="3" />
-        <line x1="12" y1="21" x2="12" y2="23" />
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-        <line x1="1" y1="12" x2="3" y2="12" />
-        <line x1="21" y1="12" x2="23" y2="12" />
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-      </animated.g>
-    </animated.svg>
+        <animated.circle
+          cx="12"
+          cy="12"
+          style={centerCircleProps}
+          fill="currentColor"
+          mask="url(#moonMask)"
+        />
+        <animated.g stroke="currentColor" style={linesProps}>
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </animated.g>
+      </animated.svg>
+    </div>
   );
 };
