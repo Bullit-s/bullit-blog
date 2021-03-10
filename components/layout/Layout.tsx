@@ -1,20 +1,19 @@
 import Head from "next/head";
 import { FC } from "react";
 import { Header } from "./Header";
+import { ContentLayout, ContentLayoutProps } from "./ContentLayout";
 
 const name = "Dmitri Sakali";
 export const siteTitle = "BullitBlog - Frontend Developer";
 export const description = "BullitBlog - Frontend Developer";
 
-interface Props {
-  home?: boolean;
-}
+interface Props extends ContentLayoutProps {}
 
-export const Layout: FC<Props> = ({ children, home }) => {
+export const Layout: FC<Props> = ({ home, contentHeader, children }) => {
   return (
     <div
       className={
-        "duration-200 pt-20 dark:bg-coolGray-700 dark:text-amber-50 min-h-screen"
+        "bg-coolGray-700 dark:bg-coolGray-800 min-h-screen h-full overflow-hidden"
       }
     >
       <Head>
@@ -30,9 +29,9 @@ export const Layout: FC<Props> = ({ children, home }) => {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Header />
-      <main className={"w-full "}>
-        <div className={"max-w-screen-xl px-2 mx-auto"}>{children}</div>
-      </main>
+      <ContentLayout home={home} contentHeader={contentHeader}>
+        {children}
+      </ContentLayout>
     </div>
   );
 };

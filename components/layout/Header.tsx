@@ -103,7 +103,7 @@ export const Header = () => {
   };
 
   return (
-    <nav className="duration-200 fixed bg-white dark:bg-coolGray-800 dark:text-amber-50 h-16 w-full z-50 border-b top-0">
+    <nav className="fixed bg-white dark:bg-coolGray-800 dark:text-white h-16 w-full z-50 border-b top-0">
       <div className="flex h-full w-full max-w-screen-xl px-2 mx-auto container justify-between items-center">
         <div className={"w-40"}>
           <Link href={{ pathname: "/" }}>
@@ -113,10 +113,9 @@ export const Header = () => {
           </Link>
         </div>
         <ul className="hidden md:flex">{renderNavigationItems()}</ul>
-
         <div
           ref={navigationMobileRef}
-          className=" md:hidden absolute w-full top-16 left-0 py-3  bg-coolGray-800 text-amber-50 transform translate-x-full"
+          className=" md:hidden absolute w-full top-16 left-0 py-3 bg-coolGray-800 transform translate-x-full"
         >
           <OutsideClick enable={false} onClick={outsideNavClose}>
             <ul className={" flex flex-col items-center"}>

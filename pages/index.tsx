@@ -4,6 +4,7 @@ import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Link from "next/link";
 import { Date } from "../components/Date";
+import { Person } from "../components/Person";
 
 interface Post {
   id: string;
@@ -13,7 +14,7 @@ interface Post {
 
 const Home = ({ allPostsData }: { allPostsData: Post[] }) => {
   return (
-    <Layout home>
+    <Layout home contentHeader={<Person />}>
       <Head>
         <title>{siteTitle}</title>
       </Head>
