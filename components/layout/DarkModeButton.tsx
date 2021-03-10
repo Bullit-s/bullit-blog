@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { animated, useSpring } from "react-spring";
-import { DEFAULT_THEME, Themes } from "../core/theme";
+import { DEFAULT_THEME, Themes } from "../../core/theme";
 
 const properties = {
   dark: {

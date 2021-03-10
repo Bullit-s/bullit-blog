@@ -1,7 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
-import styles from "./layout.module.css";
-import utilStyles from "../styles/utils.module.css";
 import { FC } from "react";
 import { Header } from "./Header";
 
@@ -15,7 +12,11 @@ interface Props {
 
 export const Layout: FC<Props> = ({ children, home }) => {
   return (
-    <div>
+    <div
+      className={
+        "duration-200 pt-20 dark:bg-coolGray-700 dark:text-amber-50 min-h-screen"
+      }
+    >
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content={description} />
@@ -29,29 +30,9 @@ export const Layout: FC<Props> = ({ children, home }) => {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Header />
-      <main className={"w-full mt-20"}>
+      <main className={"w-full "}>
         <div className={"max-w-screen-xl px-2 mx-auto"}>{children}</div>
       </main>
-      {/*<header className={styles.header}>*/}
-      {/*  <>*/}
-      {/*    <Image*/}
-      {/*      priority*/}
-      {/*      src="/images/profile.jpg"*/}
-      {/*      className={utilStyles.borderCircle}*/}
-      {/*      height={144}*/}
-      {/*      width={144}*/}
-      {/*      alt={name}*/}
-      {/*    />*/}
-      {/*    <h1 className={utilStyles.heading2Xl}>{name}</h1>*/}
-      {/*  </>*/}
-      {/*</header>*/}
-      {/*{!home && (*/}
-      {/*  <div className={styles.backToHome}>*/}
-      {/*    <Link href="/">*/}
-      {/*      <a>← Back to home</a>*/}
-      {/*    </Link>*/}
-      {/*  </div>*/}
-      {/*)}*/}
     </div>
   );
 };
