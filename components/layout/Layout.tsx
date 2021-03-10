@@ -13,7 +13,7 @@ export const Layout: FC<Props> = ({ home, contentHeader, children }) => {
   return (
     <div
       className={
-        "bg-coolGray-700 dark:bg-coolGray-800 min-h-screen h-full overflow-hidden"
+        "bg-lightGray-50 dark:bg-coolGray-800 min-h-screen h-full overflow-hidden"
       }
     >
       <Head>

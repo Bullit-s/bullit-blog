@@ -14,7 +14,7 @@ interface PostData {
 
 const Post = ({ postData }: { postData: PostData }) => {
   return (
-    <Layout>
+    <Layout contentHeader={<div>Post Page</div>}>
       <Head>
         <title>{postData.title}</title>
       </Head>

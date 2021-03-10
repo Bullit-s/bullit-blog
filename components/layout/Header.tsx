@@ -26,29 +26,36 @@ const navItems: { link: string; text: string }[] = [
 ];
 
 export const Header = () => {
+  const headerRef = useRef(null);
   const navigationMobileRef = useRef(null);
   const mobileIconRef = useRef(null);
   const [navIsOpen, setNavIsOpen] = useState(false);
-  const [outsideClick, setOutsideClick] = useState(false);
   const router = useRouter();
   const { width } = useWindowSize();
+
+  const toggleScrolled = () => {
+    if (window.pageYOffset > 0) {
+      headerRef?.current?.classList.add("scrolled");
+    } else {
+      headerRef?.current?.classList.remove("scrolled");
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", toggleScrolled);
+    return () => window.removeEventListener("scroll", toggleScrolled);
+  }, []);
 
   const openMobileNav = () => {
     navigationMobileRef.current.classList.add("touched");
     navigationMobileRef.current.classList.remove("translate-x-full");
     setNavIsOpen(true);
-    setOutsideClick(false);
   };
 
   const closeMobileNav = () => {
     navigationMobileRef.current.classList.add("touched");
     navigationMobileRef.current.classList.add("translate-x-full");
     setNavIsOpen(false);
-  };
-
-  const outsideNavClose = () => {
-    closeMobileNav();
-    setOutsideClick(true);
   };
 
   const linkClicked = (event) => {
@@ -103,7 +110,10 @@ export const Header = () => {
   };
 
   return (
-    <nav className="fixed bg-white dark:bg-coolGray-800 dark:text-white h-16 w-full z-50 border-b top-0">
+    <nav
+      ref={headerRef}
+      className="transition-shadow duration-200 fixed bg-lightGray-50 dark:bg-coolGray-800 dark:text-white h-16 w-full z-50 top-0"
+    >
       <div className="flex h-full w-full max-w-screen-xl px-2 mx-auto container justify-between items-center">
         <div className={"w-40"}>
           <Link href={{ pathname: "/" }}>
@@ -115,10 +125,10 @@ export const Header = () => {
         <ul className="hidden md:flex">{renderNavigationItems()}</ul>
         <div
           ref={navigationMobileRef}
-          className=" md:hidden absolute w-full top-16 left-0 py-3 bg-coolGray-800 transform translate-x-full"
+          className=" md:hidden absolute w-full top-16 left-0 py-3 bg-lightGray-50 dark:bg-coolGray-800 transform translate-x-full"
         >
-          <OutsideClick enable={false} onClick={outsideNavClose}>
-            <ul className={" flex flex-col items-center"}>
+          <OutsideClick enable={false} onClick={closeMobileNav}>
+            <ul className={"flex flex-col items-center"}>
               {renderNavigationItems()}
             </ul>
           </OutsideClick>
