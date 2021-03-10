@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { DarkModeButton } from "./DarkModeButton";
 import { useWindowSize } from "../../core/hooks/useWindowSize";
+import { OutsideClick } from "../OutsideClick";
 
 const navItems: { link: string; text: string }[] = [
   {
@@ -27,14 +28,27 @@ const navItems: { link: string; text: string }[] = [
 export const Header = () => {
   const navigationMobileRef = useRef(null);
   const mobileIconRef = useRef(null);
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [navIsOpen, setNavIsOpen] = useState(false);
+  const [outsideClick, setOutsideClick] = useState(false);
   const router = useRouter();
   const { width } = useWindowSize();
 
-  const toggleMobileNavigation = () => {
+  const openMobileNav = () => {
     navigationMobileRef.current.classList.add("touched");
-    navigationMobileRef.current.classList.toggle("translate-x-full");
-    setMobileNavOpen(!mobileNavOpen);
+    navigationMobileRef.current.classList.remove("translate-x-full");
+    setNavIsOpen(true);
+    setOutsideClick(false);
+  };
+
+  const closeMobileNav = () => {
+    navigationMobileRef.current.classList.add("touched");
+    navigationMobileRef.current.classList.add("translate-x-full");
+    setNavIsOpen(false);
+  };
+
+  const outsideNavClose = () => {
+    closeMobileNav();
+    setOutsideClick(true);
   };
 
   const linkClicked = (event) => {
@@ -44,7 +58,7 @@ export const Header = () => {
       });
     }
     if (width <= 768) {
-      toggleMobileNavigation();
+      closeMobileNav();
     }
   };
 
@@ -99,24 +113,29 @@ export const Header = () => {
           </Link>
         </div>
         <ul className="hidden md:flex">{renderNavigationItems()}</ul>
-        <ul
+
+        <div
           ref={navigationMobileRef}
-          className="duration-200 md:hidden absolute flex flex-col w-full top-16 left-0 py-3 items-center bg-coolGray-900 text-amber-50 transform translate-x-full"
+          className=" md:hidden absolute w-full top-16 left-0 py-3  bg-coolGray-800 text-amber-50 transform translate-x-full"
         >
-          {renderNavigationItems()}
-        </ul>
+          <OutsideClick enable={false} onClick={outsideNavClose}>
+            <ul className={" flex flex-col items-center"}>
+              {renderNavigationItems()}
+            </ul>
+          </OutsideClick>
+        </div>
         <div className="order-3 flex justify-end w-40 md:hidden">
           <div
             className={"cursor-pointer w-5 h-5 relative"}
             ref={mobileIconRef}
-            onClick={toggleMobileNavigation}
+            onClick={!navIsOpen ? openMobileNav : closeMobileNav}
           >
             <span
               className={classNames(
                 "transform transition duration-200 ease-in-out absolute h-0.5 w-full bg-coolGray-900 dark:bg-amber-50 rounded-lg left-0",
                 {
-                  "rotate-45 top-2": mobileNavOpen,
-                  "rotate-0": !mobileNavOpen,
+                  "rotate-45 top-2": navIsOpen,
+                  "rotate-0": !navIsOpen,
                 }
               )}
             />
@@ -124,8 +143,8 @@ export const Header = () => {
               className={classNames(
                 "absolute transition duration-200 ease-in-out h-0.5 w-full bg-coolGray-900 dark:bg-amber-50 rounded-lg left-0 top-2",
                 {
-                  "opacity-0": mobileNavOpen,
-                  "opacity-100": !mobileNavOpen,
+                  "opacity-0": navIsOpen,
+                  "opacity-100": !navIsOpen,
                 }
               )}
             />
@@ -133,8 +152,8 @@ export const Header = () => {
               className={classNames(
                 "transform transition duration-200 ease-in-out absolute h-0.5 w-full bg-coolGray-900 dark:bg-amber-50 rounded-lg left-0",
                 {
-                  "-rotate-45 top-2": mobileNavOpen,
-                  "rotate-0 top-4": !mobileNavOpen,
+                  "-rotate-45 top-2": navIsOpen,
+                  "rotate-0 top-4": !navIsOpen,
                 }
               )}
             />
