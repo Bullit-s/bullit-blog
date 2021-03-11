@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { DarkModeButton } from "./DarkModeButton";
 import { useWindowSize } from "../../core/hooks/useWindowSize";
 import { OutsideClick } from "../OutsideClick";
+import { useAnimateLogo } from "../../core/useAnimateLogo";
 
 const navItems: { link: string; text: string }[] = [
   {
@@ -26,12 +27,14 @@ const navItems: { link: string; text: string }[] = [
 ];
 
 export const Header = () => {
+  const logoRef = useRef(null);
   const headerRef = useRef(null);
   const navigationMobileRef = useRef(null);
   const mobileIconRef = useRef(null);
   const [navIsOpen, setNavIsOpen] = useState(false);
   const router = useRouter();
   const { width } = useWindowSize();
+  useAnimateLogo(logoRef);
 
   const toggleScrolled = () => {
     if (window.pageYOffset > 0) {
@@ -115,11 +118,12 @@ export const Header = () => {
       className="transition-shadow duration-200 fixed bg-lightGray-50 dark:bg-coolGray-800 dark:text-white h-16 w-full z-50 top-0"
     >
       <div className="flex h-full w-full max-w-screen-xl px-2 mx-auto container justify-between items-center md:px-4">
-        <div className={"w-40"}>
+        <div>
           <Link href={{ pathname: "/" }}>
-            <a className="flex flex-row text-2xl hover:text-coolGray-600 dark:hover:text-amber-100">
-              BullitBlog
-            </a>
+            <a
+              ref={logoRef}
+              className="w-36 flex flex-row text-xl dark:text-emerald-500 md:w-48 md:text-2xl hover:text-coolGray-600 dark:hover:text-emerald-400"
+            />
           </Link>
         </div>
         <ul className="hidden md:flex">{renderNavigationItems()}</ul>
@@ -133,42 +137,48 @@ export const Header = () => {
             </ul>
           </OutsideClick>
         </div>
-        <div className="order-3 flex justify-end w-40 md:hidden">
-          <div
-            className={"cursor-pointer w-5 h-5 relative"}
-            ref={mobileIconRef}
-            onClick={!navIsOpen ? openMobileNav : closeMobileNav}
-          >
-            <span
-              className={classNames(
-                "transform transition duration-200 ease-in-out absolute h-0.5 w-full bg-coolGray-900 dark:bg-amber-50 rounded-lg left-0",
-                {
-                  "rotate-45 top-2": navIsOpen,
-                  "rotate-0": !navIsOpen,
-                }
-              )}
-            />
-            <span
-              className={classNames(
-                "absolute transition duration-200 ease-in-out h-0.5 w-full bg-coolGray-900 dark:bg-amber-50 rounded-lg left-0 top-2",
-                {
-                  "opacity-0": navIsOpen,
-                  "opacity-100": !navIsOpen,
-                }
-              )}
-            />
-            <span
-              className={classNames(
-                "transform transition duration-200 ease-in-out absolute h-0.5 w-full bg-coolGray-900 dark:bg-amber-50 rounded-lg left-0",
-                {
-                  "-rotate-45 top-2": navIsOpen,
-                  "rotate-0 top-4": !navIsOpen,
-                }
-              )}
-            />
+        <div className="order-3 md:hidden">
+          <div className={"xs:w-36 flex justify-end"}>
+            <div
+              className={"cursor-pointer w-5 h-5 relative"}
+              ref={mobileIconRef}
+              onClick={!navIsOpen ? openMobileNav : closeMobileNav}
+            >
+              <span
+                className={classNames(
+                  "transform transition duration-200 ease-in-out absolute h-0.5 w-full bg-coolGray-900 dark:bg-amber-50 rounded-lg left-0",
+                  {
+                    "rotate-45 top-2": navIsOpen,
+                    "rotate-0": !navIsOpen,
+                  }
+                )}
+              />
+              <span
+                className={classNames(
+                  "absolute transition duration-200 ease-in-out h-0.5 w-full bg-coolGray-900 dark:bg-amber-50 rounded-lg left-0 top-2",
+                  {
+                    "opacity-0": navIsOpen,
+                    "opacity-100": !navIsOpen,
+                  }
+                )}
+              />
+              <span
+                className={classNames(
+                  "transform transition duration-200 ease-in-out absolute h-0.5 w-full bg-coolGray-900 dark:bg-amber-50 rounded-lg left-0",
+                  {
+                    "-rotate-45 top-2": navIsOpen,
+                    "rotate-0 top-4": !navIsOpen,
+                  }
+                )}
+              />
+            </div>
           </div>
         </div>
-        <div className={"flex justify-center w-full md:w-32 md:justify-end"}>
+        <div
+          className={
+            "flex justify-end w-full pr-4 xs:pr-0 xs:justify-center md:w-48 md:justify-end"
+          }
+        >
           <DarkModeButton />
         </div>
       </div>
