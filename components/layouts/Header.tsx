@@ -114,7 +114,7 @@ export const Header = () => {
       ref={headerRef}
       className="transition-shadow duration-200 fixed bg-lightGray-50 dark:bg-coolGray-800 dark:text-white h-16 w-full z-50 top-0"
     >
-      <div className="flex h-full w-full max-w-screen-xl px-2 mx-auto container justify-between items-center">
+      <div className="flex h-full w-full max-w-screen-xl px-2 mx-auto container justify-between items-center md:px-4">
         <div className={"w-40"}>
           <Link href={{ pathname: "/" }}>
             <a className="flex flex-row text-2xl hover:text-coolGray-600 dark:hover:text-amber-100">
