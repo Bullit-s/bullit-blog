@@ -76,28 +76,28 @@ export const Header = () => {
     return (
       <>
         <li className="md:mr-6 hover:text-coolGray-600 dark:hover:text-amber-100">
-          <Link href={{ pathname: "/", hash: "personal" }}>
+          <Link href={"/"}>
             <a className="relative" onClick={linkClicked}>
               Personal
             </a>
           </Link>
         </li>
         <li className="mt-2 md:mt-0 md:mr-6 hover:text-coolGray-600 dark:hover:text-amber-100">
-          <Link href={{ pathname: "/", hash: "blog" }}>
+          <Link href={"/resources"}>
             <a className="relative" onClick={linkClicked}>
               Resources
             </a>
           </Link>
         </li>
         <li className="mt-2 md:mt-0 md:mr-6 hover:text-coolGray-600 dark:hover:text-amber-100">
-          <Link href={{ pathname: "/", hash: "contact" }}>
+          <Link href={"/contacts"}>
             <a className="relative" onClick={linkClicked}>
               Contact
             </a>
           </Link>
         </li>
         <li className="mt-2 md:mt-0 hover:text-coolGray-600 dark:hover:text-amber-100">
-          <Link href="/cv">
+          <Link href={"/cv"}>
             <a
               onClick={linkClicked}
               className={`relative ${
@@ -119,12 +119,14 @@ export const Header = () => {
     >
       <div className="flex h-full w-full max-w-screen-xl px-2 mx-auto container justify-between items-center md:px-4">
         <div>
-          <Link href={{ pathname: "/" }}>
-            <a
-              ref={logoRef}
-              className="w-36 flex flex-row text-xl dark:text-emerald-500 md:w-48 md:text-2xl hover:text-coolGray-600 dark:hover:text-emerald-400"
-            />
-          </Link>
+          <div className={"w-36 md:w-48 whitespace-pre"}>
+            <Link href={{ pathname: "/" }}>
+              <a
+                ref={logoRef}
+                className="flex flex-row text-xl w-min dark:text-emerald-500 md:text-2xl hover:text-coolGray-600 dark:hover:text-emerald-400"
+              />
+            </Link>
+          </div>
         </div>
         <ul className="hidden md:flex">{renderNavigationItems()}</ul>
         <div

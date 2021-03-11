@@ -1,5 +1,6 @@
-import { Wave } from "../../assets/images/Wave";
 import { FC, ReactNode } from "react";
+import classNames from "classnames";
+import { Wave } from "../../assets/images/Wave";
 
 export interface ContentLayoutProps {
   home?: boolean;
@@ -15,9 +16,12 @@ export const ContentLayout: FC<ContentLayoutProps> = ({
     <main>
       <div className={"bg-white dark:bg-coolGray-700"}>
         <div
-          className={
-            "max-w-screen-xl px-2 pt-2 mx-auto dark:text-white lg:pt-20 md:px-4"
-          }
+          className={classNames(
+            "max-w-screen-xl px-2 pt-2 mx-auto dark:text-white md:px-4",
+            {
+              "lg:pt-20": home,
+            }
+          )}
         >
           {contentHeader}
         </div>

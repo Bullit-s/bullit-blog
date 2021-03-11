@@ -2,7 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    @variants responsive {
+        .bottom-initial {
+            bottom: initial;
+        }
+
+        .left-initial {
+            left: initial;
+        }
+
+        @variants dark {
+            .top-arrow-dark {
+                border-bottom-color: theme('colors.coolGray.800');
+            }
+
+            .top-arrow-light {
+                border-bottom-color: theme('colors.lightGray.50');
+            }
+
+            .left-arrow-dark {
+                border-bottom-color: transparent;
+                border-right-color: theme('colors.coolGray.800');
+            }
+
+            .left-arrow-light {
+                border-bottom-color: transparent;
+                border-right-color: theme('colors.lightGray.50');
+            }
+        }
+    }
+}
+
 nav.scrolled {
     @apply shadow-md;
     border-bottom: 0;
+}
+
+.left-arrow {
+    @apply py-4 px-8 rounded relative bg-lightGray-50 dark:bg-coolGray-800
+}
+
+.left-arrow:before {
+    content: "";
+    border: 9px solid transparent;
+    @apply bottom-full left-2/4 absolute top-arrow-light dark:top-arrow-dark md:left-arrow-light md:dark:left-arrow-dark md:bottom-initial md:left-initial md:right-full md:top-4;
+
 }
